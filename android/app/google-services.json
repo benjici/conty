@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "473344588416",
+    "firebase_url": "https://notes-48b92-default-rtdb.firebaseio.com",
+    "project_id": "notes-48b92",
+    "storage_bucket": "notes-48b92.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473344588416:android:342e0606d82bf251c60465",
+        "android_client_info": {
+          "package_name": "com.example.remote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473344588416-fdt0chq49g5m94m96pdd7titlo9s5g3g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhHTN7G70tskY7GYU8-4FmO7Z_INdArIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "473344588416-fdt0chq49g5m94m96pdd7titlo9s5g3g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
