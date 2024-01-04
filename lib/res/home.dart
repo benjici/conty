@@ -160,10 +160,10 @@ class friendSystem {
                                           .collection("users")
                                           .doc(userAuth.currentUser!.uid)
                                           .delete()
-                                          .then((value) {
-                                        userAuth.currentUser!.delete();
-                                      }).then((value) {
-                                        nav(context, RegisterPage());
+                                          .then((value) async {
+                                        await userAuth.currentUser!.delete();
+                                      }).then((value) async {
+                                        await nav(context, RegisterPage());
                                       });
                                     },
                                     child: Text(

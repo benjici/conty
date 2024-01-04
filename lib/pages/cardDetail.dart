@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:remote/auth/auth.dart';
 import 'package:remote/pages/loading.dart';
 import 'package:remote/res/appBar.dart';
@@ -111,37 +114,38 @@ class _CardDetailPageState extends State<CardDetailPage> {
     });
   }
 
-  void uploadFile() {
-    if (!picking) {
-      picking = true;
-      FilePicker.platform
-          .pickFiles(
-        type: FileType.any,
-        allowMultiple: true,
-      )
-          .then((value) async {
-        picking = false;
-        try {
-          //pattern fürs aufrufen idderDoc
-          final storage = FirebaseStorage.instanceFor(
-                  bucket: "gs://notes-48b92.appspot.com")
-              .ref();
-          value!.files.forEach((element) {
-            storage
-                .child(widget.id + "/" + element.name!)
-                .putFile(File(element.path!))
-                .then((p0) {
-              setState(() {
-                snackBar("Your File/s has been uploaded", context);
-              });
+  Future showFiles() async {
+    await FilePicker.platform
+        .pickFiles(
+      type: FileType.any,
+      lockParentWindow: true,
+      allowMultiple: true,
+    )
+        .then((value) async {
+      try {
+        //pattern fürs aufrufen idderDoc
+        final storage =
+            FirebaseStorage.instanceFor(bucket: "gs://notes-48b92.appspot.com")
+                .ref();
+        value!.files.forEach((element) {
+          storage
+              .child(widget.id + "/" + element.name!)
+              .putFile(File(element.path!))
+              .then((p0) {
+            setState(() {
+              snackBar("Your File/s has been uploaded", context);
             });
           });
-        } on AssertionError catch (e) {
-          snackBar(
-              "Something went wrong! Files like: .exe, .dll, .bat, .apk and .ipa cant be uploaded, maybe you were trying to upload one of these",
-              context);
-        }
-      });
-    }
+        });
+      } on AssertionError catch (e) {
+        snackBar(
+            "Something went wrong! Files like: .exe, .dll, .bat, .apk and .ipa cant be uploaded, maybe you were trying to upload one of these",
+            context);
+      }
+    });
+  }
+
+  void uploadFile() async {
+    openAppSettings();
   }
 }

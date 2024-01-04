@@ -1,9 +1,13 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:remote/res/btn.dart';
 import 'package:remote/res/inp.dart';
 import 'package:remote/res/snackbar.dart';
@@ -84,11 +88,8 @@ class _RegisterPageState extends State<RegisterPage> {
           inp(devicePass, "Your Device Password", Icons.password),
           Padding(
             padding: EdgeInsets.only(top: 5),
-            child: btn("Your downloading Directory", Icons.folder, () {
-              FilePicker.platform.getDirectoryPath().then((value) {
-                path = value!;
-              });
-            }),
+            child: btn("Your downloading Directory", Icons.folder,
+                () => openAppSettings()),
           ),
           Padding(
             padding: EdgeInsets.only(top: 20),
@@ -99,6 +100,54 @@ class _RegisterPageState extends State<RegisterPage> {
         ],
       ),
     );
+  }
+
+  void uploadFile() {
+    showCupertinoModalPopup(
+        context: context,
+        builder: (context) {
+          return CupertinoActionSheet(
+            actions: [
+              Platform.isMacOS || Platform.isWindows
+                  ? SizedBox()
+                  : CupertinoActionSheetAction(
+                      child: Text('Photo Gallery'),
+                      onPressed: () async {
+                        // close the options modal
+                        Navigator.of(context).pop();
+                        // get image from gallery
+                        await ImagePicker.platform
+                            .getImageFromSource(source: ImageSource.camera);
+                      },
+                    ),
+              CupertinoActionSheetAction(
+                child: Text('Files'),
+                onPressed: () async {
+                  // close the options modal
+                  Navigator.of(context).pop();
+                  // get image from gallery
+                  await FilePicker.platform.getDirectoryPath().then((value) {
+                    setState(() {
+                      path = value!;
+                    });
+                  });
+                },
+              ),
+              Platform.isMacOS || Platform.isWindows
+                  ? SizedBox()
+                  : CupertinoActionSheetAction(
+                      child: Text('Photo Gallery'),
+                      onPressed: () async {
+                        // close the options modal
+                        Navigator.of(context).pop();
+                        // get image from gallery
+                        await ImagePicker.platform
+                            .getImageFromSource(source: ImageSource.camera);
+                      },
+                    ),
+            ],
+          );
+        });
   }
 
   void register() {
