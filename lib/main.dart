@@ -30,6 +30,8 @@ void main() async {
 String appId() {
   if (Platform.isMacOS) {
     return "1:473344588416:ios:6a60fbe219fdcbccc60465";
+  } else if (Platform.isIOS) {
+    return "1:473344588416:ios:a191d618a0d902fac60465";
   } else {
     return "1:473344588416:web:05515be9adb70e89c60465";
   }

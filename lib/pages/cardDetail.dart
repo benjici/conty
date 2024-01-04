@@ -45,8 +45,8 @@ class _CardDetailPageState extends State<CardDetailPage> {
                       final files = snap.data!.items;
                       return Column(
                         children: [
-                          btnCenter("Send Files to: " + widget.path,
-                              Icons.create, () => uploadFile()),
+                          btnCenter("Send Files to: " + widget.id, Icons.create,
+                              () => uploadFile()),
                           Expanded(
                               child: Padding(
                             padding: EdgeInsets.only(top: 5),
