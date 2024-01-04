@@ -104,6 +104,10 @@ class _RegisterPageState extends State<RegisterPage> {
   void register() {
     print("erw");
     print("erw");
+    print("erw");
+    print("erw    print();c");
+    print("erw");
+    print("erw");
     if (deviceIp.toString().isNotEmpty &&
         devicePass.text.toString().isNotEmpty &&
         path != "none") {
